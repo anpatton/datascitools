@@ -8,30 +8,28 @@ class GKR2D:
         GKR object with associated data that be used to calculate and predict.
     """
 
-    def __init__(self, x: np.array, y: np.array, b: int):
-        self.x = np.array(x)
-        self.y = np.array(y)
+    def __init__(self, coords: np.array, vals: np.array, b: int):
+        self.coords = np.array(coords)
+        self.vals = np.array(vals)
         self.b = b
 
-    #TODO incorporate full predict and prediction data creation
-    #x_values = np.tile(x_grid, len(y_grid))
-    #y_values = np.repeat(y_grid, len(x_grid))
-    #prediction_coords = list(map(list, zip(x_values, y_values)))
-    #gkr = GKR(shot_coordinates, points_scored, 2)
-    #z_values = list(map(lambda x: gkr.predict(x), prediction_coords))
-
-    '''Implement the Gaussian Kernel'''
-    def gaussian_kernel(self, z):
+    def __gaussian_kernel(self, z):
         return (1/np.sqrt(2*np.pi))*np.exp(-0.5*z**2)
 
-    '''Calculate weights and return prediction'''
-    def _single_predict(self, X):
-        kernels = np.array([self.gaussian_kernel((np.linalg.norm(xi-X))/self.b) for xi in self.x])
-        weights = np.array([len(self.x) * (kernel/np.sum(kernels)) for kernel in kernels])
-        return np.dot(weights.T, self.y)/len(self.x)
+    @staticmethod
+    def __fast_linalg_norm(a):
+        return np.sqrt(np.einsum('ij,ij->i', a, a))
+
+    def __single_predict(self, predict_coord_single):
+        kernels = self.__gaussian_kernel(self.__fast_linalg_norm(self.coords - predict_coord_single) / self.b)
+        kernel_total = np.sum(kernels)
+        x_len = len(self.coords)
+        weights = x_len * (kernels / kernel_total)
+        result = np.dot(weights.T, self.vals) / len(self.coords)
+        return result
     
-    def predict(self, X):
-        z_values = list(map(lambda x: gkr.predict(x), prediction_coords)) ## this is slow
+    def predict(self, predict_coords: np.array):
+        return [self.__single_predict(coord) for coord in predict_coords]
 
 
 class KDE2D:

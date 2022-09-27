@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ds-tools"
+version = "0.0.1"
+authors = [
+  { name="Andrew Patton", email="anpatt7@gmail.com" },
+]
+description = "A collection of things we use. Some are fancy, many are simple."
+readme = "README.md"
+license = { file="LICENSE" }
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "pandas",
+    "numpy",
+    "ngboost",
+    "sklearn"
+]
+
+[project.urls]
+"Homepage" = "this is a place holder"

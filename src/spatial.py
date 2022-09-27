@@ -13,15 +13,26 @@ class GKR2D:
         self.y = np.array(y)
         self.b = b
 
+    #TODO incorporate full predict and prediction data creation
+    #x_values = np.tile(x_grid, len(y_grid))
+    #y_values = np.repeat(y_grid, len(x_grid))
+    #prediction_coords = list(map(list, zip(x_values, y_values)))
+    #gkr = GKR(shot_coordinates, points_scored, 2)
+    #z_values = list(map(lambda x: gkr.predict(x), prediction_coords))
+
     '''Implement the Gaussian Kernel'''
     def gaussian_kernel(self, z):
         return (1/np.sqrt(2*np.pi))*np.exp(-0.5*z**2)
 
     '''Calculate weights and return prediction'''
-    def predict(self, X):
+    def _single_predict(self, X):
         kernels = np.array([self.gaussian_kernel((np.linalg.norm(xi-X))/self.b) for xi in self.x])
         weights = np.array([len(self.x) * (kernel/np.sum(kernels)) for kernel in kernels])
         return np.dot(weights.T, self.y)/len(self.x)
+    
+    def predict(self, X):
+        z_values = list(map(lambda x: gkr.predict(x), prediction_coords)) ## this is slow
+
 
 class KDE2D:
     def __init__(self, x: np.array, y: np.array, bw: int, x_grid: np.array,y_grid: np.array):

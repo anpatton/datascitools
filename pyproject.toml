@@ -3,7 +3,7 @@ requires = ["setuptools>=65.0", "wheel>=0.37.1"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "dstools"
+name = "datascitools"
 version = "0.0.1"
 authors = [
   { name="Andrew Patton", email="anpatt7@gmail.com" },

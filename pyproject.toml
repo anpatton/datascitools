@@ -1,12 +1,14 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=65.0", "wheel>=0.37.1"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ds-tools"
+name = "dstools"
 version = "0.0.1"
 authors = [
   { name="Andrew Patton", email="anpatt7@gmail.com" },
+  { name="Magnus Nissel", email="magnus.nissel@gmail.com" },
+  
 ]
 description = "A collection of things we use. Some are fancy, many are simple."
 readme = "README.md"
@@ -21,8 +23,27 @@ dependencies = [
     "pandas",
     "numpy",
     "ngboost",
-    "sklearn"
+    "sklearn",
+    "jenkspy"
 ]
 
 [project.urls]
-"Homepage" = "this is a place holder"
+"Homepage" = "https://github.com/anpatton/datascitools"
+"Bug Tracker" = "https://github.com/anpatton/datascitools/issues"
+
+[project.optional-dependencies]
+dev = [
+  "black",
+  "flake8"
+]
+tests = [
+  "pytest",
+  "pytest-mock",
+  "pytest-sugar", 
+  "pytest-clarity",
+  "coverage"
+]
+
+[tool.black]
+line-length = 119
+target_version = ['py39']

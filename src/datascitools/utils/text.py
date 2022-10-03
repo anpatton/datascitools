@@ -16,7 +16,7 @@ def get_yules_complexity_from_tokens(tokens: list[str]) -> Tuple[float, float]:
     """
     token_counter = Counter(tok.upper() for tok in tokens)
     m1 = sum(token_counter.values())
-    m2 = sum([freq ** 2 for freq in token_counter.values()])
+    m2 = sum([freq**2 for freq in token_counter.values()])
     i = (m1 * m1) / (m2 - m1)
     k = 10000 / i
     return (k, i)

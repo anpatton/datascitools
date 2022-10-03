@@ -3,15 +3,11 @@ from kneed import KneeLocator
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 
+
 def find_kmeans(data, scaler=StandardScaler(), max_clusters=12, plot=True):
     scaled_features = scaler.fit_transform(data)
 
-    kmeans_kwargs = {
-        "init": "random",
-        "n_init": 10,
-        "max_iter": 300,
-        "random_state": 42
-        }
+    kmeans_kwargs = {"init": "random", "n_init": 10, "max_iter": 300, "random_state": 42}
 
     sse = []
 
@@ -28,8 +24,6 @@ def find_kmeans(data, scaler=StandardScaler(), max_clusters=12, plot=True):
         plt.ylabel("SSE")
         plt.show()
 
-    kl = KneeLocator(
-        range(1, max_clusters), sse, curve="convex", direction="decreasing"
-    )
+    kl = KneeLocator(range(1, max_clusters), sse, curve="convex", direction="decreasing")
 
     return kl.elbow

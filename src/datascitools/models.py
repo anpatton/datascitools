@@ -6,10 +6,11 @@ import numpy as np
 from sklearn.utils import check_array
 
 
-#from sklearn.datasets import fetch_california_housing
-#from sklearn.model_selection import train_test_split
-#from sklearn.metrics import mean_squared_error
-#from sklearn.model_selection import cross_val_predict
+# from sklearn.datasets import fetch_california_housing
+# from sklearn.model_selection import train_test_split
+# from sklearn.metrics import mean_squared_error
+# from sklearn.model_selection import cross_val_predict
+
 
 class RONGBA(NGBRegressor):
     """Subclass of NGBRegressor that uses predefined parameter set (RONGBA).
@@ -85,13 +86,12 @@ class RONGBA(NGBRegressor):
             prediction_frame["sd"] = prediction_dict.scale[0:]
 
         else:
-            prediction_frame = pd.DataFrame(
-                {"mean": prediction_dict.loc[0:], "sd": prediction_dict.scale[0:]}
-            )
+            prediction_frame = pd.DataFrame({"mean": prediction_dict.loc[0:], "sd": prediction_dict.scale[0:]})
         if y is not None:
             prediction_frame["actual"] = y
 
         return prediction_frame
+
 
 class GKR2D:
     """Implementation of Gaussian Kernel Regression.
@@ -105,18 +105,21 @@ class GKR2D:
         self.y = np.array(y)
         self.b = b
 
-    '''Implement the Gaussian Kernel'''
-    def gaussian_kernel(self, z):
-        return (1/np.sqrt(2*np.pi))*np.exp(-0.5*z**2)
+    """Implement the Gaussian Kernel"""
 
-    '''Calculate weights and return prediction'''
+    def gaussian_kernel(self, z):
+        return (1 / np.sqrt(2 * np.pi)) * np.exp(-0.5 * z**2)
+
+    """Calculate weights and return prediction"""
+
     def predict(self, X):
-        kernels = np.array([self.gaussian_kernel((np.linalg.norm(xi-X))/self.b) for xi in self.x])
-        weights = np.array([len(self.x) * (kernel/np.sum(kernels)) for kernel in kernels])
-        return np.dot(weights.T, self.y)/len(self.x)
+        kernels = np.array([self.gaussian_kernel((np.linalg.norm(xi - X)) / self.b) for xi in self.x])
+        weights = np.array([len(self.x) * (kernel / np.sum(kernels)) for kernel in kernels])
+        return np.dot(weights.T, self.y) / len(self.x)
+
 
 class KDE2D:
-    def __init__(self, x: np.array, y: np.array, bw: int, x_grid: np.array,y_grid: np.array):
+    def __init__(self, x: np.array, y: np.array, bw: int, x_grid: np.array, y_grid: np.array):
         self.x = x
         self.y = y
         self.bw = bw
@@ -126,12 +129,12 @@ class KDE2D:
         self.xy_grid_locations = np.vstack([xx.ravel(), yy.ravel()]).T
         self.xy_event_locations = np.vstack([x, y]).T
 
-    def fit(self):    
+    def fit(self):
         kde = KernelDensity(bandwidth=self.bw)
         self.kde = kde.fit(self.xy_event_locations)
-    
+
     def predict_grid(self):
         dens = np.exp(self.kde.score_samples(self.xy_grid_locations))
-        df = pd.DataFrame({'dens': dens})
-        df[['x','y']] = self.xy_grid_locations
+        df = pd.DataFrame({"dens": dens})
+        df[["x", "y"]] = self.xy_grid_locations
         return df

@@ -130,4 +130,4 @@ dmypy.json
 
 # prep file
 stuff_to_add.py
-examples.ipynb
+*.ipynb

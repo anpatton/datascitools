@@ -35,3 +35,7 @@ def jenks_discretize(data, n_classes: int) -> np.array:
 def expand_lists(item_repeats, *lists_of_items):
     """Provide # of repetitions for each item in list(s)"""
     return [list(chain([[lists_of_items]*item_repeats for lists_of_items, item_repeats in zip(lists_of_items, item_repeats)])) for item_repeats in lists_of_items]
+
+def flatten_array(array: np.array) -> list:
+    """Flattens array end to end (nD -> 1d)"""
+    return list(chain(*array))   

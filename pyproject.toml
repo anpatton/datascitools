@@ -24,7 +24,12 @@ dependencies = [
     "numpy",
     "ngboost",
     "sklearn",
-    "jenkspy"
+    "jenkspy",
+    "lightgbm",
+    "catboost",
+    "BorutaShap",
+    "dataclasses",
+    "tqdm"
 ]
 
 [project.urls]

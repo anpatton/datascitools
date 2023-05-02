@@ -29,7 +29,8 @@ dependencies = [
     "catboost",
     "BorutaShap",
     "dataclasses",
-    "tqdm"
+    "tqdm",
+    "scipy"
 ]
 
 [project.urls]

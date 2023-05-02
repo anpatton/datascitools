@@ -13,7 +13,7 @@ def diff_evo(loss_fn : callable, params : List):
     x0 = tuple([p.init for p in params])
     bounds = [p.bounds for p in params]
     opt_val = differential_evolution(loss_fn, x0=x0, bounds=bounds)
-    return {k:v for k,v in zip(varnames, opt_val.x)}
+    return dict(zip(varnames, opt_val.x))
 
 # b = EvoVar(varname='b', init=-0.4, bounds=(-4,4))
 # c = EvoVar(varname='c', init=23_000, bounds=(5_000,50_000))
